@@ -130,9 +130,9 @@ public abstract class AbstractRefreshableApplicationContext extends AbstractAppl
 			DefaultListableBeanFactory beanFactory = createBeanFactory();
 			// 设置ID
 			beanFactory.setSerializationId(getId());
-			// 自定义Bean工厂
+			// 自定义Bean工厂，设置属性主要有两个，1、bean是否允许被覆盖（override）2、是否允许循环依赖
 			customizeBeanFactory(beanFactory);
-			// 加载BeanDefinitions
+			// 初始化documentReader,并进行XML文件读取及解析,默认命名空间的解析，自定义标签的解析
 			loadBeanDefinitions(beanFactory);
 			this.beanFactory = beanFactory;
 		}
