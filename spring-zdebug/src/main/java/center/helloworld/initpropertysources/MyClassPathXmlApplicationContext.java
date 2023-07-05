@@ -17,11 +17,12 @@ public class MyClassPathXmlApplicationContext extends ClassPathXmlApplicationCon
 	@Override
 	protected void initPropertySources() {
 		System.out.println("MyClassPathXmlApplicationContext ~~~");
-		getEnvironment().setRequiredProperties("dmaoncai");
+//		getEnvironment().setRequiredProperties("dmaoncai");
 	}
 
 	@Override
 	protected void customizeBeanFactory(DefaultListableBeanFactory beanFactory) {
+		System.out.println("customizeBeanFactory ~~");
 		super.customizeBeanFactory(beanFactory);
 		beanFactory.setParentBeanFactory(null);
 	}
