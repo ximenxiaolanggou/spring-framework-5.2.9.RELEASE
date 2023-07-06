@@ -230,6 +230,7 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 		}
 
 		// Absolute or relative?
+		// 如果是绝对URI则直接根据地质加载对应的配置文件
 		if (absoluteLocation) {
 			try {
 				int importCount = getReaderContext().getReader().loadBeanDefinitions(location, actualResources);
@@ -243,9 +244,12 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 			}
 		}
 		else {
+			// 如果是相对路径，则根据相对地址计算出绝对地址
 			// No URL -> considering resource location as relative to the current file.
 			try {
 				int importCount;
+				// Resource存在多个子类实现类，如VfsResource、FileSystemResource等，而每个resource的createRekative方式实现都不一样，
+				// 所以这里先使用子类的方法尝试解析
 				Resource relativeResource = getReaderContext().getResource().createRelative(location);
 				if (relativeResource.exists()) {
 					importCount = getReaderContext().getReader().loadBeanDefinitions(relativeResource);
@@ -268,6 +272,7 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 						"Failed to import bean definitions from relative location [" + location + "]", ele, ex);
 			}
 		}
+		// 解析后进行监听器激活处理
 		Resource[] actResArray = actualResources.toArray(new Resource[0]);
 		getReaderContext().fireImportProcessed(location, actResArray, extractSource(ele));
 	}
