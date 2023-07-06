@@ -75,7 +75,7 @@ public class ResourceEditorRegistrar implements PropertyEditorRegistrar {
 	 * @see org.springframework.core.io.support.ResourcePatternResolver
 	 * @see org.springframework.context.ApplicationContext
 	 */
-	public ResourceEditorRegistrar(ResourceLoader resourceLoader, PropertyResolver propertyResolver) {
+	public  ResourceEditorRegistrar(ResourceLoader resourceLoader, PropertyResolver propertyResolver) {
 		this.resourceLoader = resourceLoader;
 		this.propertyResolver = propertyResolver;
 	}
