@@ -144,8 +144,8 @@ public class ClassPathXmlApplicationContext extends AbstractXmlApplicationContex
 		// 设置配置文件路径（如果存在占位符需要进行解析替换）详细点进去
 		setConfigLocations(configLocations);
 		if (refresh) {
+			refresh();
 		}
-		refresh();
 	}
 
 

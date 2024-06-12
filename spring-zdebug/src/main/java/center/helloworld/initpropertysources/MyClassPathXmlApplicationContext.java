@@ -24,6 +24,9 @@ public class MyClassPathXmlApplicationContext extends ClassPathXmlApplicationCon
 	protected void customizeBeanFactory(DefaultListableBeanFactory beanFactory) {
 		System.out.println("customizeBeanFactory ~~");
 		super.customizeBeanFactory(beanFactory);
+		 // 添加自定义的BeanFactoryPostProcessor有两种方式，第一种就是下面试下方法，拿到Bean工厂对象直接操作，第二种就是通过配置文件添加自定义BeanFactoryPostProcessor，由Spring容器管理
+		super.addBeanFactoryPostProcessor(new MyBeanFactoryPostProcessor());
+
 		beanFactory.setParentBeanFactory(null);
 	}
 }

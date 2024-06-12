@@ -10,4 +10,10 @@
         <property name="name" value="damoncai"/>
         <property name="age" value="12"/>
     </bean>
+
+	<bean class="center.helloworld.initpropertysources.MyBeanFactoryPostProcessor">
+
+	</bean>
+
+<!--	<bean class="center.helloworld.initpropertysources.MyBeanDefinitionRegistryPostProcessor"></bean>-->
 </beans>
