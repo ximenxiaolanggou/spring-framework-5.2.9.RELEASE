@@ -54,6 +54,7 @@ public class ModelAndViewContainer {
 	@Nullable
 	private Object view;
 
+	// 默认使用的Model, ModelAndView | Model | Map
 	private final ModelMap defaultModel = new BindingAwareModelMap();
 
 	@Nullable

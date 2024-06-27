@@ -527,7 +527,9 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 		long startTime = System.currentTimeMillis();
 
 		try {
+			// 初始化SpringMVC的 ApplicationContext
 			this.webApplicationContext = initWebApplicationContext();
+			// 空实现，留给子类实现
 			initFrameworkServlet();
 		}
 		catch (ServletException | RuntimeException ex) {
@@ -597,11 +599,14 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 			wac = createWebApplicationContext(rootContext);
 		}
 
+		// 未接收到刷新事件，则初始化九大内置组件
+		// 在SpringMVC容器创建前（createWebApplicationContext）会添加监听器，并且在refresh方法中进行调用
 		if (!this.refreshEventReceived) {
 			// Either the context is not a ConfigurableApplicationContext with refresh
 			// support or the context injected at construction time had already been
 			// refreshed -> trigger initial onRefresh manually here.
 			synchronized (this.onRefreshMonitor) {
+				// 初始化九大组件
 				onRefresh(wac);
 			}
 		}
@@ -698,7 +703,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 		wac.setServletContext(getServletContext());
 		wac.setServletConfig(getServletConfig());
 		wac.setNamespace(getNamespace());
-		// 添加监听器
+		// 添加监听器，里面调用了onRefresh方法，初始化了九大内置组件
 		wac.addApplicationListener(new SourceFilteringListener(wac, new ContextRefreshListener()));
 
 		// The wac environment's #initPropertySources will be called in any case when the context
@@ -709,6 +714,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 			((ConfigurableWebEnvironment) env).initPropertySources(getServletContext(), getServletConfig());
 		}
 
+		// 空实现，留给子类扩展
 		postProcessWebApplicationContext(wac);
 		applyInitializers(wac);
 		wac.refresh();
@@ -849,6 +855,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 	 * @param event the incoming ApplicationContext event
 	 */
 	public void onApplicationEvent(ContextRefreshedEvent event) {
+		// 将refreshEventReceived置为true（主线上会判断该字段，如果为true那么主线上就不会再初始化九大内置组件）
 		this.refreshEventReceived = true;
 		synchronized (this.onRefreshMonitor) {
 			onRefresh(event.getApplicationContext());
@@ -887,11 +894,14 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		// 获取请求类型
 		HttpMethod httpMethod = HttpMethod.resolve(request.getMethod());
 		if (httpMethod == HttpMethod.PATCH || httpMethod == null) {
+			// 请求方法为 PATCH 或者为空直接处理请求
 			processRequest(request, response);
 		}
 		else {
+			// 调用父类方法
 			super.service(request, response);
 		}
 	}
@@ -1000,21 +1010,32 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 	protected final void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		// 记录当前时间
 		long startTime = System.currentTimeMillis();
+		// 定义失败异常
 		Throwable failureCause = null;
 
+		// 从上下文Holder中获取本地上下文（国际化）
 		LocaleContext previousLocaleContext = LocaleContextHolder.getLocaleContext();
+
+		// 根据当前请求获取本地上下文（国际化）
+		// request.getLocale()方法可以获取页面的中国际化，比如中文就是 zh_CN
 		LocaleContext localeContext = buildLocaleContext(request);
 
+		// 获取请求属性
 		RequestAttributes previousAttributes = RequestContextHolder.getRequestAttributes();
 		ServletRequestAttributes requestAttributes = buildRequestAttributes(request, response, previousAttributes);
 
+		// 获取同步管理器
 		WebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);
+		// 注册可调用的拦截器，这里是请求绑定拦截器
 		asyncManager.registerCallableInterceptor(FrameworkServlet.class.getName(), new RequestBindingInterceptor());
 
+		// 初始化ContextHolders，如果构建出来的localeContext，和requestAttributes不为空就设置到各自的holder中
 		initContextHolders(request, localeContext, requestAttributes);
 
 		try {
+			// 执行业务逻辑
 			doService(request, response);
 		}
 		catch (ServletException | IOException ex) {
@@ -1032,6 +1053,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 				requestAttributes.requestCompleted();
 			}
 			logResult(request, response, failureCause, asyncManager);
+			// 发布请求处理事件
 			publishRequestHandledEvent(request, response, startTime, failureCause);
 		}
 	}

@@ -102,7 +102,10 @@ public class ServletInvocableHandlerMethod extends InvocableHandlerMethod {
 	public void invokeAndHandle(ServletWebRequest webRequest, ModelAndViewContainer mavContainer,
 			Object... providedArgs) throws Exception {
 
+		// 调用父类invokeForRequest
 		Object returnValue = invokeForRequest(webRequest, mavContainer, providedArgs);
+
+		// 设置响应状态码
 		setResponseStatus(webRequest);
 
 		if (returnValue == null) {
@@ -120,6 +123,8 @@ public class ServletInvocableHandlerMethod extends InvocableHandlerMethod {
 		mavContainer.setRequestHandled(false);
 		Assert.state(this.returnValueHandlers != null, "No return value handlers");
 		try {
+			// 当前对象初始化会创建15返回值处理器
+			// 循环匹配
 			this.returnValueHandlers.handleReturnValue(
 					returnValue, getReturnValueType(returnValue), mavContainer, webRequest);
 		}

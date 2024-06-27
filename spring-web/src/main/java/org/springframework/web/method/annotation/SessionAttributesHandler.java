@@ -52,6 +52,7 @@ public class SessionAttributesHandler {
 
 	private final Set<Class<?>> attributeTypes = new HashSet<>();
 
+	// 存储所有已知可以被当前处理器处理的属性名（构造方法设置、方法设置）
 	private final Set<String> knownAttributeNames = Collections.newSetFromMap(new ConcurrentHashMap<>(4));
 
 	private final SessionAttributeStore sessionAttributeStore;

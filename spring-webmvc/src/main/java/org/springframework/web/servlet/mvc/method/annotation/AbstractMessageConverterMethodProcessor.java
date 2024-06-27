@@ -216,7 +216,7 @@ public abstract class AbstractMessageConverterMethodProcessor extends AbstractMe
 			List<MediaType> acceptableTypes = getAcceptableMediaTypes(request);
 			List<MediaType> producibleTypes = getProducibleMediaTypes(request, valueType, targetType);
 
-			if (body != null && producibleTypes.isEmpty()) {
+			if (body != null && producibleTypes.isEmpty()) { // 异常
 				throw new HttpMessageNotWritableException(
 						"No converter found for return value of type: " + valueType);
 			}

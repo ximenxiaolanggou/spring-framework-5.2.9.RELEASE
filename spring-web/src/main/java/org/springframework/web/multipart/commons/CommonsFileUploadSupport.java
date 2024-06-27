@@ -253,6 +253,7 @@ public abstract class CommonsFileUploadSupport {
 
 		// Extract multipart files and multipart parameters.
 		for (FileItem fileItem : fileItems) {
+			// 表单的普通字段数据
 			if (fileItem.isFormField()) {
 				String value;
 				String partEncoding = determineEncoding(fileItem.getContentType(), encoding);
@@ -279,6 +280,7 @@ public abstract class CommonsFileUploadSupport {
 				multipartParameterContentTypes.put(fileItem.getFieldName(), fileItem.getContentType());
 			}
 			else {
+				// 表单文件上传
 				// multipart file field
 				CommonsMultipartFile file = createMultipartFile(fileItem);
 				multipartFiles.add(file.getName(), file);
@@ -289,6 +291,7 @@ public abstract class CommonsFileUploadSupport {
 				);
 			}
 		}
+		// 封装成MultipartParsingResult对象
 		return new MultipartParsingResult(multipartFiles, multipartParameters, multipartParameterContentTypes);
 	}
 

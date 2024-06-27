@@ -184,13 +184,18 @@ public final class ModelFactory {
 	 * @throws Exception if creating BindingResult attributes fails
 	 */
 	public void updateModel(NativeWebRequest request, ModelAndViewContainer container) throws Exception {
+		// 获取 defaultModel
 		ModelMap defaultModel = container.getDefaultModel();
+		//
+		// 查看会话信息是否处理完成
 		if (container.getSessionStatus().isComplete()){
+			// 处理完成清理会话属性
 			this.sessionAttributesHandler.cleanupAttributes(request);
 		}
 		else {
 			this.sessionAttributesHandler.storeAttributes(request, defaultModel);
 		}
+		// 判断请求是否已经处理完或者是redirect类型的返回值，其实就是判断是否需要页面的渲染操作
 		if (!container.isRequestHandled() && container.getModel() == defaultModel) {
 			updateBindingResult(request, defaultModel);
 		}

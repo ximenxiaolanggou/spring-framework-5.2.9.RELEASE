@@ -277,8 +277,10 @@ public class ContextLoader {
 			// Store context in local instance variable, to guarantee that
 			// it is available on ServletContext shutdown.
 			if (this.context == null) {
+				// 创建容器，这里创建的是xmlWebApplicationContext
 				this.context = createWebApplicationContext(servletContext);
 			}
+			// xmlWebApplicationContext 继承自ConfigurableWebApplicationContext，所以能进来
 			if (this.context instanceof ConfigurableWebApplicationContext) {
 				ConfigurableWebApplicationContext cwac = (ConfigurableWebApplicationContext) this.context;
 				if (!cwac.isActive()) {
@@ -297,7 +299,7 @@ public class ContextLoader {
 			}
 			// servletContext 设置属性
 			// key为WebApplicationContext.class.getName() + ".ROOT"
-			// value为WebApplicationContext
+			// value为xmlWebApplicationContext
 			servletContext.setAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE, this.context);
 
 			ClassLoader ccl = Thread.currentThread().getContextClassLoader();
