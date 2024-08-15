@@ -1,5 +1,6 @@
 package center.helloworld.interceptor;
 
+import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
  * @create 2024/6/27
  * @note
  */
-
 public class MyInterceptor implements HandlerInterceptor {
 
 	@Override
