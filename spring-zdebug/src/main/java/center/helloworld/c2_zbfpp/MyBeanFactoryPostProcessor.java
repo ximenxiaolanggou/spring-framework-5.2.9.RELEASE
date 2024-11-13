@@ -1,4 +1,4 @@
-package center.helloworld.initpropertysources;
+package center.helloworld.c2_zbfpp;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
@@ -14,6 +14,6 @@ public class MyBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
 
 	@Override
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-		System.out.println("----------");
+		System.out.println("----------MyBeanFactoryPostProcessor----------");
 	}
 }

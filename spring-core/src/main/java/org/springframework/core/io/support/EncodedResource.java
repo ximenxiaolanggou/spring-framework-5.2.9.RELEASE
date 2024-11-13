@@ -85,8 +85,11 @@ public class EncodedResource implements InputStreamSource {
 	private EncodedResource(Resource resource, @Nullable String encoding, @Nullable Charset charset) {
 		super();
 		Assert.notNull(resource, "Resource must not be null");
+		// 设置resource
 		this.resource = resource;
+		// 设置编码
 		this.encoding = encoding;
+		// 设置字符集
 		this.charset = charset;
 	}
 

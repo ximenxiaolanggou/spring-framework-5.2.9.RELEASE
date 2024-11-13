@@ -412,9 +412,13 @@ public class BeanDefinitionParserDelegate {
 	 */
 	@Nullable
 	public BeanDefinitionHolder parseBeanDefinitionElement(Element ele, @Nullable BeanDefinition containingBean) {
+		// bean标签元素解析
+		// ID属性
 		String id = ele.getAttribute(ID_ATTRIBUTE);
+		// name属性
 		String nameAttr = ele.getAttribute(NAME_ATTRIBUTE);
 
+		// 解析别名 - name属性，可以有多个别名比如 name="a,b,c"
 		List<String> aliases = new ArrayList<>();
 		if (StringUtils.hasLength(nameAttr)) {
 			String[] nameArr = StringUtils.tokenizeToStringArray(nameAttr, MULTI_VALUE_ATTRIBUTE_DELIMITERS);
@@ -423,6 +427,8 @@ public class BeanDefinitionParserDelegate {
 
 		String beanName = id;
 		if (!StringUtils.hasText(beanName) && !aliases.isEmpty()) {
+			// 如果未设置id属性 && 别名部位空
+			// 将第一个别名取出来设置为beanName（id值）
 			beanName = aliases.remove(0);
 			if (logger.isTraceEnabled()) {
 				logger.trace("No XML 'id' specified - using '" + beanName +
@@ -431,9 +437,10 @@ public class BeanDefinitionParserDelegate {
 		}
 
 		if (containingBean == null) {
+			// 校验名称的唯一性
 			checkNameUniqueness(beanName, aliases, ele);
 		}
-
+		// 解析BeanDefinition元素
 		AbstractBeanDefinition beanDefinition = parseBeanDefinitionElement(ele, beanName, containingBean);
 		if (beanDefinition != null) {
 			if (!StringUtils.hasText(beanName)) {
@@ -500,31 +507,43 @@ public class BeanDefinitionParserDelegate {
 	public AbstractBeanDefinition parseBeanDefinitionElement(
 			Element ele, String beanName, @Nullable BeanDefinition containingBean) {
 
+		// 包装成BeanEntry对象，并放置到ParseState中（本质是ArrayQueue）
 		this.parseState.push(new BeanEntry(beanName));
 
 		String className = null;
+		// class属性
 		if (ele.hasAttribute(CLASS_ATTRIBUTE)) {
 			className = ele.getAttribute(CLASS_ATTRIBUTE).trim();
 		}
 		String parent = null;
+		// parent属性
 		if (ele.hasAttribute(PARENT_ATTRIBUTE)) {
 			parent = ele.getAttribute(PARENT_ATTRIBUTE);
 		}
 
 		try {
+			// 创建BeanDefinition对象
 			AbstractBeanDefinition bd = createBeanDefinition(className, parent);
 
+			// 解析bean标签上面的属性比如：singleton、scope等
 			parseBeanDefinitionAttributes(ele, beanName, containingBean, bd);
 			bd.setDescription(DomUtils.getChildElementValueByTagName(ele, DESCRIPTION_ELEMENT));
 
+			// 下面就是解析子标签
+			// meta子标签解析
 			parseMetaElements(ele, bd);
+			// lookup子标签解析
 			parseLookupOverrideSubElements(ele, bd.getMethodOverrides());
+			// replaced-method子标签解析
 			parseReplacedMethodSubElements(ele, bd.getMethodOverrides());
-
+			// constructor-arg子标签解析
 			parseConstructorArgElements(ele, bd);
+			// property子标签解析
 			parsePropertyElements(ele, bd);
+			// qualifier子标签解析
 			parseQualifierElements(ele, bd);
 
+			// 将BeanDefinition和资源关联配置
 			bd.setResource(this.readerContext.getResource());
 			bd.setSource(extractSource(ele));
 

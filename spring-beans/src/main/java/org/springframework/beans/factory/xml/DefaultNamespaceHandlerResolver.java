@@ -91,8 +91,8 @@ public class DefaultNamespaceHandlerResolver implements NamespaceHandlerResolver
 	public DefaultNamespaceHandlerResolver(@Nullable ClassLoader classLoader) {
 		this(classLoader, DEFAULT_HANDLER_MAPPINGS_LOCATION);
 	}
-
 	/**
+
 	 * Create a new {@code DefaultNamespaceHandlerResolver} using the
 	 * supplied mapping file location.
 	 * @param classLoader the {@link ClassLoader} instance used to load mapping resources
@@ -132,6 +132,8 @@ public class DefaultNamespaceHandlerResolver implements NamespaceHandlerResolver
 							"] does not implement the [" + NamespaceHandler.class.getName() + "] interface");
 				}
 				NamespaceHandler namespaceHandler = (NamespaceHandler) BeanUtils.instantiateClass(handlerClass);
+				// init方法注册标签的解析器，比如：<context:annotation-config/> 和 <context:component-scan/>
+				// 针对annotation-config和component-scan需要使用不同的解析器来实现
 				namespaceHandler.init();
 				handlerMappings.put(namespaceUri, namespaceHandler);
 				return namespaceHandler;

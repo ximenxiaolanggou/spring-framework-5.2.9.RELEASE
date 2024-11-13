@@ -82,14 +82,19 @@ public abstract class AbstractBeanDefinitionReader implements BeanDefinitionRead
 	 * @see #setEnvironment
 	 */
 	protected AbstractBeanDefinitionReader(BeanDefinitionRegistry registry) {
+		// 参数 registry为DeafaultListableBeanFactory
 		Assert.notNull(registry, "BeanDefinitionRegistry must not be null");
 		this.registry = registry;
 
 		// Determine ResourceLoader to use.
+		// 判断是否实现了ResourceLoader接口
+		// ResourceLoader: 资源加载器，使用时提供路径。可以将路径下的资源解析成Resource对象
 		if (this.registry instanceof ResourceLoader) {
 			this.resourceLoader = (ResourceLoader) this.registry;
 		}
 		else {
+			// 创建一个PathMatchingResourcePatternResolver对象
+			// 在ClassPathXmlApplicationContext -> super(parent)中也有创建过PathMatchingResourcePatternResolver对象
 			this.resourceLoader = new PathMatchingResourcePatternResolver();
 		}
 

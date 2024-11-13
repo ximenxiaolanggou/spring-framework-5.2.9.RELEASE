@@ -190,6 +190,10 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	private final AtomicBoolean closed = new AtomicBoolean();
 
 	/** Synchronization monitor for the "refresh" and "destroy". */
+	/**
+	 * 启动关闭监视器 - 锁对象
+	 * 启动加锁、关闭加锁（启动和关闭都是完整的过程，不能中断）
+	 */
 	private final Object startupShutdownMonitor = new Object();
 
 	/** Reference to the JVM shutdown hook, if registered. */
@@ -236,7 +240,9 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * @param parent the parent context
 	 */
 	public AbstractApplicationContext(@Nullable ApplicationContext parent) {
+		// 调用无参构造
 		this();
+		// 设置父容器
 		setParent(parent);
 	}
 
@@ -317,6 +323,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	@Override
 	public ConfigurableEnvironment getEnvironment() {
 		if (this.environment == null) {
+			// 创建环境
 			this.environment = createEnvironment();
 		}
 		return this.environment;
