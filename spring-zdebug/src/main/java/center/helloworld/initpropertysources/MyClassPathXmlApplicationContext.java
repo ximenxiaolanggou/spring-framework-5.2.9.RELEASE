@@ -1,6 +1,6 @@
 package center.helloworld.initpropertysources;
 
-import center.helloworld.c2_zbfpp.MyBeanFactoryPostProcessor;
+import center.helloworld.c5_beanFactoryPostProcessor.MyBeanFactoryPostProcessor;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

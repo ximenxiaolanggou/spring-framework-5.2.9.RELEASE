@@ -12,7 +12,7 @@
     </bean>
 
 	<!-- bfpp -->
-	<bean class="center.helloworld.c2_zbfpp.MyBeanFactoryPostProcessor">
+	<bean class="center.helloworld.c5_beanFactoryPostProcessor.MyBeanFactoryPostProcessor">
 
 	</bean>
 

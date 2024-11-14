@@ -5,15 +5,18 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <bean class="center.helloworld.entity.User" init-method="init">
-        <property name="name" value="damoncai"/>
-        <property name="age" value="12"/>
-    </bean>
 
-	<!-- bfpp -->
-	<bean class="center.helloworld.c5_beanFactoryPostProcessor.MyBeanFactoryPostProcessor">
+   <bean class="center.helloworld.c3_propertyEditor.Customer">
+	   <property name="name" value="张三"/>
+	   <property name="address" value="江苏省-盐城市-射阳县"/>
+   </bean>
 
+	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="propertyEditorRegistrars">
+			<list>
+				<bean class="center.helloworld.c3_propertyEditor.AddressPropertyRegister"/>
+			</list>
+		</property>
 	</bean>
 
-<!--	<bean class="center.helloworld.initpropertysources.MyBeanDefinitionRegistryPostProcessor"></bean>-->
 </beans>

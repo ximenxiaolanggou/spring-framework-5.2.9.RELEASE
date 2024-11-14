@@ -48,6 +48,7 @@ public class SpelExpressionParser extends TemplateAwareExpressionParser {
 	 */
 	public SpelExpressionParser(SpelParserConfiguration configuration) {
 		Assert.notNull(configuration, "SpelParserConfiguration must not be null");
+		// 属性赋值 - 保存配置类
 		this.configuration = configuration;
 	}
 

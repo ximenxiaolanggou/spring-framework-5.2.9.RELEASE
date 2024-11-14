@@ -1,4 +1,4 @@
-package center.helloworld.c2_zbfpp;
+package center.helloworld.c5_beanFactoryPostProcessor;
 
 import center.helloworld.entity.User;
 import org.springframework.context.ApplicationContext;
@@ -12,10 +12,7 @@ public class Test {
 
 	public static void main(String[] args) {
 		ApplicationContext context =
-				new ClassPathXmlApplicationContext("c1_spring-${username}.xml");
-
-		User user = context.getBean(User.class);
-		System.out.println(user);
+				new ClassPathXmlApplicationContext("c5_beanFactoryPostProcessor.xml");
 
 	}
 }
