@@ -1,6 +1,6 @@
 package center.helloworld.c1_ReadXml;
 
-import center.helloworld.entity.User;
+import center.helloworld.entity.b2.User;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

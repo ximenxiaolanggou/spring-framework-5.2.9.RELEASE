@@ -1,7 +1,6 @@
-package center.helloworld;
+package center.helloworld.c8_resolveBeforeInstantiation;
 
 import center.helloworld.entity.b1.Student;
-import center.helloworld.entity.b2.User;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -13,8 +12,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class Test {
 
 	public static void main(String[] args) {
-		ApplicationContext ac = new ClassPathXmlApplicationContext("test.xml");
-		Student student = (Student) ac.getBean("student");
-		System.out.println(student);
+		ApplicationContext ac = new ClassPathXmlApplicationContext("c8_resolveBeforeInstantiation.xml");
+		BeforeInstantiation bean = ac.getBean(BeforeInstantiation.class);
+		bean.doSomeThing();
 	}
 }

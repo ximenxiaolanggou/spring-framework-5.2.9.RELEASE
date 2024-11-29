@@ -6,5 +6,11 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
 
+	<!-- Prototype作用域的Bean -->
+	<bean id="prototypeBean" class="center.helloworld.c7_lookupMethod.PrototypeBean" scope="prototype" />
 
+	<!-- Singleton作用域的Bean -->
+	<bean id="singletonBean" class="center.helloworld.c7_lookupMethod.SingletonBean">
+		<lookup-method name="getPrototypeBean" bean="prototypeBean"/>
+	</bean>
 </beans>

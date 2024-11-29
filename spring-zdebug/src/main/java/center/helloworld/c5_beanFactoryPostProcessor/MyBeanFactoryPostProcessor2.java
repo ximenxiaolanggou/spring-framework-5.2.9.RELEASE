@@ -9,10 +9,10 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
  * @create 2023/7/10
  * @note
  */
-public class MyBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
+public class MyBeanFactoryPostProcessor2 implements BeanFactoryPostProcessor {
 
 	@Override
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-		System.out.println("----------MyBeanFactoryPostProcessor1----------");
+		System.out.println("----------MyBeanFactoryPostProcessor2----------");
 	}
 }

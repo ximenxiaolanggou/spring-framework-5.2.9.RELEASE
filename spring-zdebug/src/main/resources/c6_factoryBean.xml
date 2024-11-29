@@ -6,5 +6,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
 
+	<bean id="myFactoryBean" class="center.helloworld.c6_factoryBean.MyFactoryBean"/>
+
+	<bean class="center.helloworld.entity.b1.Teacher"/>
 
 </beans>

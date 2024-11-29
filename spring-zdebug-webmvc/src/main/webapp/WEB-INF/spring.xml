@@ -9,6 +9,6 @@
         https://www.springframework.org/schema/context/spring-context.xsd
 ">
 
-	<bean id="user" class="center.helloworld.entity.User"/>
+	<bean id="user" class="center.helloworld.entity.b2.User"/>
 
 </beans>

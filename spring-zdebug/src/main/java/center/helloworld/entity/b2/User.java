@@ -1,4 +1,4 @@
-package center.helloworld.entity;
+package center.helloworld.entity.b2;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

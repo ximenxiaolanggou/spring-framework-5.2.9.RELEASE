@@ -8,10 +8,6 @@
 
 
 	<context:component-scan base-package="center"/>
-
-   <bean class="center.helloworld.c3_propertyEditor.Customer">
-	   <property name="name" value="张三"/>
-	   <property name="address" value="江苏省-盐城市-射阳县"/>
-   </bean>
+	<bean class="center.helloworld.c5_beanFactoryPostProcessor.MyBeanFactoryPostProcessor"/>
 
 </beans>
