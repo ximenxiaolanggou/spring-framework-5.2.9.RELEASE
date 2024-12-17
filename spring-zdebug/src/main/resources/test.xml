@@ -9,5 +9,5 @@
 
 <!--	<bean class="center.helloworld.initpropertysources.MyBeanDefinitionRegistryPostProcessor"></bean>-->
 
-	<bean id="student" class="center.helloworld.entity.b1.Student"/>
+	<bean id="student" class="center.helloworld.entity.b1.Student" />
 </beans>

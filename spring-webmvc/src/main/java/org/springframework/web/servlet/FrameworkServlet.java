@@ -716,6 +716,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 
 		// 空实现，留给子类扩展
 		postProcessWebApplicationContext(wac);
+		// 执行自定义的context
 		applyInitializers(wac);
 		wac.refresh();
 	}
@@ -764,20 +765,25 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 	 * @see ConfigurableApplicationContext#refresh()
 	 */
 	protected void applyInitializers(ConfigurableApplicationContext wac) {
+		// 获取globalInitializerClasses属性
 		String globalClassNames = getServletContext().getInitParameter(ContextLoader.GLOBAL_INITIALIZER_CLASSES_PARAM);
 		if (globalClassNames != null) {
+			// 如果存在添加到contextInitializers集合中
 			for (String className : StringUtils.tokenizeToStringArray(globalClassNames, INIT_PARAM_DELIMITERS)) {
 				this.contextInitializers.add(loadInitializer(className, wac));
 			}
 		}
 
+		// 判断 contextInitializerClasses是否为空。不为空则添加
 		if (this.contextInitializerClasses != null) {
 			for (String className : StringUtils.tokenizeToStringArray(this.contextInitializerClasses, INIT_PARAM_DELIMITERS)) {
 				this.contextInitializers.add(loadInitializer(className, wac));
 			}
 		}
 
+		// 排序
 		AnnotationAwareOrderComparator.sort(this.contextInitializers);
+		// 挨个取出来初始化
 		for (ApplicationContextInitializer<ConfigurableApplicationContext> initializer : this.contextInitializers) {
 			initializer.initialize(wac);
 		}

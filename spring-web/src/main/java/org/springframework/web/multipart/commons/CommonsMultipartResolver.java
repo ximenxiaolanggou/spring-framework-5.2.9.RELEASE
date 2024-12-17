@@ -157,7 +157,7 @@ public class CommonsMultipartResolver extends CommonsFileUploadSupport
 	 * @throws MultipartException if multipart resolution failed.
 	 */
 	protected MultipartParsingResult parseRequest(HttpServletRequest request) throws MultipartException {
-		// 读取文件编码
+		// 读取文件编码（重请求中获取，如果获取不到就使用默认的ISO-8859-1）
 		String encoding = determineEncoding(request);
 		// 准备FileUplaod组件，该组件属于org.apache.commons包下
 		FileUpload fileUpload = prepareFileUpload(encoding);

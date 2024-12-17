@@ -131,19 +131,25 @@ public abstract class AbstractUrlHandlerMapping extends AbstractHandlerMapping i
 			// We need to care for the default handler directly, since we need to
 			// expose the PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE for it as well.
 			Object rawHandler = null;
+			// 如果是根路径，则使用rootHandler处理器
 			if (StringUtils.matchesCharacter(lookupPath, '/')) {
+				// 如果请求的路径仅仅是“/”,那么使用RootHandler进行处理
 				rawHandler = getRootHandler();
 			}
+			// 如果无法找到handler，则使用默认的handler
 			if (rawHandler == null) {
 				rawHandler = getDefaultHandler();
 			}
 			if (rawHandler != null) {
 				// Bean name or resolved handler?
+				// 如果找到的处理器是String类型，则从容器中找到该beanName对应的Bean作为处理器
 				if (rawHandler instanceof String) {
 					String handlerName = (String) rawHandler;
 					rawHandler = obtainApplicationContext().getBean(handlerName);
 				}
+				// 空方法，校验处理器。目前暂无子类实现该方法
 				validateHandler(rawHandler, request);
+				// 创建处理器（HandlerExecutionChain对象）
 				handler = buildPathExposingHandler(rawHandler, lookupPath, lookupPath, null);
 			}
 		}
